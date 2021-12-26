@@ -5,7 +5,7 @@ frameworkVersion: "2"
 plugins:
   - serverless-python-requirements
   - serverless-wsgi
-
+  - serverless-basic-authentication
 custom:
   tableName: "fav-companies-table-${self:provider.stage}"
   wsgi:
@@ -31,6 +31,12 @@ provider:
         - dynamodb:DeleteItem
       Resource:
         - { "Fn::GetAtt": ["UsersDynamoDBTable", "Arn"] }
+    - Effect: Allow
+      Action:
+        - apigateway:GET
+      Resource: "*"
+  apiKeys:
+    - admin
   environment:
     FAVOURITE_COMPANIES_TABLE: ${self:custom.tableName}
 
@@ -38,24 +44,42 @@ functions:
   app:
     handler: wsgi_handler.handler
     events:
-      - http: ANY /
+      - http:
+          path: ANY /
+          method: get
+          private: true
       - http: "ANY /{proxy+}"
+          path: ANY /
+          method: get
+          private: true
   getUsers:
     handler: wsgi_handler.handler
     events:
-      - http: "GET /favourite_companies"
+      - http:
+          path: /favourite_companies
+          method: get
+          private: true
   getUser:
     handler: wsgi_handler.handler
     events:
-      - http: "GET /favourite_company/{proxy+}"
+      - http:
+          path: /favourite_company/{proxy+}
+          method: get
+          private: true
   createUser:
     handler: wsgi_handler.handler
     events:
-      - http: "POST /favourite_company/create"
+      - http:
+          path: /favourite_company/create
+          method: post
+          private: true
   deleteUser:
     handler: wsgi_handler.handler
     events:
-      - http: "DELETE /favourite_company/delete/{proxy+}"
+      - http:
+          path: /favourite_company/delete/{proxy+}
+          method: delete
+          private: true
 
 resources:
   Resources:
@@ -76,3 +100,12 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    GatewayResponse:
+      Type: "AWS::ApiGateway::GatewayResponse"
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.WWW-Authenticate: "'Basic'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: "ApiGatewayRestApi"
+        StatusCode: "401"

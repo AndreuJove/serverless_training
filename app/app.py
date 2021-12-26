@@ -1,24 +1,14 @@
-from boto3 import client
-from flask import Flask
-
-
-app = Flask(__name__)
-
 import json
 
-from flask import jsonify, request, make_response
+from boto3 import client
+from flask import Flask, jsonify, request, make_response
 
 from .utils import get_timestamp
 from .constants import FAVOURITE_COMPANIES_TABLE, FAVOURITE_ORG_ID, ORG_ID
 
 
+app = Flask(__name__)
 client = client("dynamodb", region_name="eu-west-1")
-
-
-@app.route("/", methods=["GET"])
-def hello():
-    print(FAVOURITE_COMPANIES_TABLE)
-    return {"Hello World!": FAVOURITE_COMPANIES_TABLE}
 
 
 @app.route("/favourite_companies", methods=["GET"])
