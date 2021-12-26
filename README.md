@@ -4,11 +4,11 @@ Python Flask API service, backed by DynamoDB, running on AWS Lambda using the tr
 
 ## Endpoints requested:
 
-- ##### `GET /favourite_company/<org_id>`
+- #### `GET /favourite_company/<org_id>`
 
   List all items with the `org_id` provided.
 
-- ##### `POST /favourite_company/create`
+- #### `POST /favourite_company/create`
   Method to create an item in the database.
 
 Example:
@@ -20,12 +20,14 @@ curl -H "Content-Type: application/json" -u username:apikey -X POST https://woo6
 
 ## Extra endpoints:
 
-- ##### GET `/favourite_companies`
+- #### GET `/favourite_companies`
 
   List all items of the table.
 
-- ##### DELETE `/favourite_company/delete/<org_id>/<favourite_org_id>`
+- #### DELETE `/favourite_company/delete/<org_id>/<favourite_org_id>`
   Delete the item of the database with the `org_id` and the `favourite_org_id` provided.
+
+---
 
 ### Development
 

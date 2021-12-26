@@ -35,8 +35,9 @@ provider:
       Action:
         - apigateway:GET
       Resource: "*"
-  apiKeys:
-    - admin
+  apiGateway:
+    apiKeys:
+      - admin
   environment:
     FAVOURITE_COMPANIES_TABLE: ${self:custom.tableName}
 
@@ -44,14 +45,7 @@ functions:
   app:
     handler: wsgi_handler.handler
     events:
-      - http:
-          path: ANY /
-          method: get
-          private: true
       - http: "ANY /{proxy+}"
-          path: ANY /
-          method: get
-          private: true
   getUsers:
     handler: wsgi_handler.handler
     events:
