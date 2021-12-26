@@ -47,7 +47,7 @@ functions:
   getUser:
     handler: wsgi_handler.handler
     events:
-      - http: "GET /favourite_company/get/{proxy+}"
+      - http: "GET /favourite_company/{proxy+}"
   createUser:
     handler: wsgi_handler.handler
     events:

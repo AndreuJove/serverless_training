@@ -10,3 +10,19 @@ In order to package your dependencies locally with `serverless-python-requiremen
 python3.8 -m venv ./venv
 source ./venv/bin/activate
 ```
+
+### Endpoints requested
+
+- `GET /favourite_company/<org_id>`
+  List all items with the `org_id` provided
+
+- `POST /favourite_company/create`
+  Method to create an item in the database
+
+### Extra endpoints
+
+- `GET /favourite_companies`
+  List all items of the table.
+
+- `DELETE /favourite_company/delete/<org_id>/<favourite_org_id>`
+  Delete the item of the database with the `org_id` and the `favourite_org_id` provided.
