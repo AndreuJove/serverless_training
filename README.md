@@ -2,7 +2,7 @@
 
 Python Flask API service, backed by DynamoDB, running on AWS Lambda using the traditional Serverless Framework.
 
-## Endpoints requested:
+## Requested endpoints :
 
 - #### GET `/favourite_company/<org_id>`
 
@@ -15,14 +15,14 @@ Python Flask API service, backed by DynamoDB, running on AWS Lambda using the tr
   ```
 
 - #### POST `/favourite_company/create`
+
   Method to create an item in the database.
 
-Example:
+  Example:
 
-```bash
-curl -H "Content-Type: application/json" -u username:apikey -X POST https://woo6lrrukc.execute-api.eu-west-1.amazonaws.com/api/favourite_company/create -d '{"org_id": "amazon", "favourite_org_id": "facebook"}'
-
-```
+  ```bash
+  curl -H "Content-Type: application/json" -u username:apikey -X POST https://woo6lrrukc.execute-api.eu-west-1.amazonaws.com/api/favourite_company/create -d '{"org_id": "amazon", "favourite_org_id": "facebook"}'
+  ```
 
 ## Extra endpoints:
 
@@ -33,7 +33,6 @@ curl -H "Content-Type: application/json" -u username:apikey -X POST https://woo6
   Example:
 
   ```bash
-
   curl -H "Content-Type: application/json" -u username:apikey -X GET https://woo6lrrukc.execute-api.eu-west-1.amazonaws.com/api/favourite_companies
 
   ```
@@ -48,6 +47,15 @@ curl -H "Content-Type: application/json" -u username:apikey -X POST https://woo6
   curl -H "Content-Type: application/json" -u username:apikey -X DELETE https://woo6lrrukc.execute-api.eu-west-1.amazonaws.com/api/favourite_company/delete/amazon/facebook
 
   ```
+
+## DynamoDB design:
+
+- partition key -> org_id
+- sort key -> favourite_org_id
+
+---
+
+---
 
 ---
 
