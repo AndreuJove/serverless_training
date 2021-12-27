@@ -8,6 +8,12 @@ Python Flask API service, backed by DynamoDB, running on AWS Lambda using the tr
 
   List all items with the `org_id` provided.
 
+  Example:
+
+  ```bash
+  curl -H "Content-Type: application/json" -u username:apikey -X GET https://woo6lrrukc.execute-api.eu-west-1.amazonaws.com/api/favourite_company/amazon
+  ```
+
 - #### `POST /favourite_company/create`
   Method to create an item in the database.
 
@@ -24,8 +30,24 @@ curl -H "Content-Type: application/json" -u username:apikey -X POST https://woo6
 
   List all items of the table.
 
+  Example:
+
+  ```bash
+
+  curl -H "Content-Type: application/json" -u username:apikey -X GET https://woo6lrrukc.execute-api.eu-west-1.amazonaws.com/api/favourite_companies
+
+  ```
+
 - #### DELETE `/favourite_company/delete/<org_id>/<favourite_org_id>`
+
   Delete the item of the database with the `org_id` and the `favourite_org_id` provided.
+
+  Example:
+
+  ```bash
+  curl -H "Content-Type: application/json" -u username:apikey -X DELETE https://woo6lrrukc.execute-api.eu-west-1.amazonaws.com/api/favourite_company/delete/amazon/facebook
+
+  ```
 
 ---
 
