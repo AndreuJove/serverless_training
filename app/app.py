@@ -8,13 +8,14 @@ from .constants import FAVOURITE_COMPANIES_TABLE, FAVOURITE_ORG_ID, ORG_ID
 
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 client = client("dynamodb", region_name="eu-west-1")
 
 
 @app.route("/favourite_companies", methods=["GET"])
 def get_all_favourite_companies():
     table = client.scan(TableName=FAVOURITE_COMPANIES_TABLE)
-    return (json.dumps(table["Items"]), 200, {"Content-Type": "application/json"})
+    return jsonify(table["Items"]), 200, {"Content-Type": "application/json"}
 
 
 @app.route("/favourite_company/<string:org_id>", methods=["GET"])

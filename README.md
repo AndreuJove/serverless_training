@@ -4,7 +4,7 @@ Python Flask API service, backed by DynamoDB, running on AWS Lambda using the tr
 
 ## Endpoints requested:
 
-- #### `GET /favourite_company/<org_id>`
+- #### GET `/favourite_company/<org_id>`
 
   List all items with the `org_id` provided.
 
@@ -14,7 +14,7 @@ Python Flask API service, backed by DynamoDB, running on AWS Lambda using the tr
   curl -H "Content-Type: application/json" -u username:apikey -X GET https://woo6lrrukc.execute-api.eu-west-1.amazonaws.com/api/favourite_company/amazon
   ```
 
-- #### `POST /favourite_company/create`
+- #### POST `/favourite_company/create`
   Method to create an item in the database.
 
 Example:
