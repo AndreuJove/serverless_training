@@ -45,34 +45,13 @@ functions:
   app:
     handler: wsgi_handler.handler
     events:
-      - http: "ANY /{proxy+}"
-  getUsers:
-    handler: wsgi_handler.handler
-    events:
       - http:
-          path: /favourite_companies
-          method: get
+          path: / # this matches the base path
+          method: ANY
           private: true
-  getUser:
-    handler: wsgi_handler.handler
-    events:
       - http:
-          path: /favourite_company/{proxy+}
-          method: get
-          private: true
-  createUser:
-    handler: wsgi_handler.handler
-    events:
-      - http:
-          path: /favourite_company/create
-          method: post
-          private: true
-  deleteUser:
-    handler: wsgi_handler.handler
-    events:
-      - http:
-          path: /favourite_company/delete/{proxy+}
-          method: delete
+          path: /{any+}
+          method: ANY
           private: true
 
 resources:
