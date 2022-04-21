@@ -1,5 +1,3 @@
-import json
-
 from boto3 import client
 from flask import Flask, jsonify, request, make_response
 
@@ -8,7 +6,7 @@ from .constants import FAVOURITE_COMPANIES_TABLE, FAVOURITE_ORG_ID, ORG_ID
 
 
 app = Flask(__name__)
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 client = client("dynamodb", region_name="eu-west-1")
 
 
@@ -23,10 +21,7 @@ def get_company(org_id):
     resp = client.query(
         TableName=FAVOURITE_COMPANIES_TABLE,
         KeyConditions={
-            ORG_ID: {
-                "ComparisonOperator": "EQ",
-                "AttributeValueList": [{"S": org_id}],
-            }
+            ORG_ID: {"ComparisonOperator": "EQ", "AttributeValueList": [{"S": org_id}],}
         },
     )
 
@@ -36,19 +31,30 @@ def get_company(org_id):
     return jsonify(resp["Items"])
 
 
-@app.route("/favourite_company/delete/<string:org_id>/<string:favourite_org_id>",methods=["DELETE"])
+@app.route(
+    "/favourite_company/delete/<string:org_id>/<string:favourite_org_id>",
+    methods=["DELETE"],
+)
 def delete_company(org_id, favourite_org_id):
-    resp = client.get_item(TableName = FAVOURITE_COMPANIES_TABLE,Key= {ORG_ID: {"S": org_id},FAVOURITE_ORG_ID: {"S": favourite_org_id},})
+    resp = client.get_item(
+        TableName=FAVOURITE_COMPANIES_TABLE,
+        Key={ORG_ID: {"S": org_id}, FAVOURITE_ORG_ID: {"S": favourite_org_id},},
+    )
 
-    if not resp.get('Item'):
-        return jsonify({"error": f"There is no company with org_id: {org_id} and favourite_org_id: {favourite_org_id}."}), 400
+    if not resp.get("Item"):
+        return (
+            jsonify(
+                {
+                    "error": f"There is no company with org_id: {org_id} and favourite_org_id: {favourite_org_id}."
+                }
+            ),
+            400,
+        )
 
     _ = client.delete_item(
-        TableName = FAVOURITE_COMPANIES_TABLE,
-        Key= {
-                ORG_ID: {"S": org_id},
-                FAVOURITE_ORG_ID: {"S": favourite_org_id},
-        })
+        TableName=FAVOURITE_COMPANIES_TABLE,
+        Key={ORG_ID: {"S": org_id}, FAVOURITE_ORG_ID: {"S": favourite_org_id},},
+    )
 
     return jsonify(
         {
@@ -62,7 +68,14 @@ def create_user():
     org_id = request.json.get(ORG_ID)
     favourite_org_id = request.json.get(FAVOURITE_ORG_ID)
     if not org_id or not favourite_org_id:
-        return jsonify({"error": "Please provide org_id and favourite_org_id in the request body."}), 400
+        return (
+            jsonify(
+                {
+                    "error": "Please provide org_id and favourite_org_id in the request body."
+                }
+            ),
+            400,
+        )
 
     item = {
         ORG_ID: {"S": org_id},
@@ -79,7 +92,6 @@ def create_user():
     )
 
 
-
 @app.errorhandler(404)
-def resource_not_found(e):
-    return make_response(jsonify(error="Not found!"), 404)
+def resource_not_found(_):
+    return make_response(jsonify(error_handled="Not found!"), 404)
