@@ -4,9 +4,14 @@ from flask import Flask, jsonify, request, make_response
 from .utils import get_timestamp
 from .constants import FAVOURITE_COMPANIES_TABLE, FAVOURITE_ORG_ID, ORG_ID
 
+
 app = Flask(__name__)
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 client = client("dynamodb", region_name="eu-west-1")
+
+
+hey = lambda x: x
+print(hey)
 
 
 @app.route("/favourite_companies", methods=["GET"])
