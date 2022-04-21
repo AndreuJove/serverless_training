@@ -4,7 +4,6 @@ from flask import Flask, jsonify, request, make_response
 from .utils import get_timestamp
 from .constants import FAVOURITE_COMPANIES_TABLE, FAVOURITE_ORG_ID, ORG_ID
 
-
 app = Flask(__name__)
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 client = client("dynamodb", region_name="eu-west-1")
@@ -21,7 +20,10 @@ def get_company(org_id):
     resp = client.query(
         TableName=FAVOURITE_COMPANIES_TABLE,
         KeyConditions={
-            ORG_ID: {"ComparisonOperator": "EQ", "AttributeValueList": [{"S": org_id}],}
+            ORG_ID: {
+                "ComparisonOperator": "EQ",
+                "AttributeValueList": [{"S": org_id}],
+            }
         },
     )
 
@@ -38,7 +40,10 @@ def get_company(org_id):
 def delete_company(org_id, favourite_org_id):
     resp = client.get_item(
         TableName=FAVOURITE_COMPANIES_TABLE,
-        Key={ORG_ID: {"S": org_id}, FAVOURITE_ORG_ID: {"S": favourite_org_id},},
+        Key={
+            ORG_ID: {"S": org_id},
+            FAVOURITE_ORG_ID: {"S": favourite_org_id},
+        },
     )
 
     if not resp.get("Item"):
@@ -53,7 +58,10 @@ def delete_company(org_id, favourite_org_id):
 
     _ = client.delete_item(
         TableName=FAVOURITE_COMPANIES_TABLE,
-        Key={ORG_ID: {"S": org_id}, FAVOURITE_ORG_ID: {"S": favourite_org_id},},
+        Key={
+            ORG_ID: {"S": org_id},
+            FAVOURITE_ORG_ID: {"S": favourite_org_id},
+        },
     )
 
     return jsonify(
