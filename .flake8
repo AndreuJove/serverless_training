@@ -13,3 +13,5 @@ ignore = E402,E302,E305,E501,E401,E731, W503, E231
 exclude = .git,__pycache__,docs/source/conf.py,old,build,dist
 max-line-length = 100
 max-complexity = 18
+[black]
+max-line-length = 80
